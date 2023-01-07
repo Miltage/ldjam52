@@ -1,0 +1,37 @@
+[gd_scene load_steps=6 format=3 uid="uid://cxtsi6kh7pib1"]
+
+[ext_resource type="PackedScene" uid="uid://busd3xnchkgq" path="res://models/side_fence.glb" id="1_knrt2"]
+[ext_resource type="Shader" path="res://shaders/curvature.gdshader" id="2_bwixu"]
+[ext_resource type="Texture2D" uid="uid://3yrbxkwni8gi" path="res://models/palette.png" id="3_k78ad"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7x1pa"]
+render_priority = 0
+shader = ExtResource("2_bwixu")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = 0.5
+shader_parameter/metallic = null
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = null
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = null
+shader_parameter/texture_albedo = ExtResource("3_k78ad")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o8fdi"]
+size = Vector3(0.1, 1, 10)
+
+[node name="SideFence" type="StaticBody3D"]
+
+[node name="side_fence" parent="." instance=ExtResource("1_knrt2")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0)
+
+[node name="Cube" parent="side_fence" index="0"]
+surface_material_override/0 = SubResource("ShaderMaterial_7x1pa")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.468939, -4.98163)
+shape = SubResource("BoxShape3D_o8fdi")
+
+[editable path="side_fence"]

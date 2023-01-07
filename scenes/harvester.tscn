@@ -1,0 +1,54 @@
+[gd_scene load_steps=6 format=3 uid="uid://cqjp6nxs7fyme"]
+
+[ext_resource type="Shader" path="res://shaders/curvature.gdshader" id="1_3d7vv"]
+[ext_resource type="Script" path="res://scripts/harvester.gd" id="1_dk2bk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sa11u"]
+render_priority = 0
+shader = ExtResource("1_3d7vv")
+shader_parameter/albedo = Color(0.603922, 0.239216, 0.878431, 1)
+shader_parameter/point_size = null
+shader_parameter/roughness = null
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = null
+shader_parameter/metallic = null
+shader_parameter/uv1_scale = null
+shader_parameter/uv1_offset = null
+shader_parameter/uv2_scale = null
+shader_parameter/uv2_offset = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2814e"]
+render_priority = 0
+shader = ExtResource("1_3d7vv")
+shader_parameter/albedo = Color(0.717647, 0.25098, 1, 1)
+shader_parameter/point_size = null
+shader_parameter/roughness = null
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = null
+shader_parameter/metallic = null
+shader_parameter/uv1_scale = null
+shader_parameter/uv1_offset = null
+shader_parameter/uv2_scale = null
+shader_parameter/uv2_offset = null
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bcdc2"]
+size = Vector3(4, 0.5, 1)
+
+[node name="Harvester" type="Node3D"]
+script = ExtResource("1_dk2bk")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.272461, 0)
+size = Vector3(4, 0.5, 0.5)
+material = SubResource("ShaderMaterial_sa11u")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2965, -2.70825)
+size = Vector3(2, 3, 4)
+material = SubResource("ShaderMaterial_2814e")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.29543, 0)
+shape = SubResource("BoxShape3D_bcdc2")

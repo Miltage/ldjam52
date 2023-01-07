@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://bo8enipoetsnd"]
+
+[ext_resource type="Script" path="res://scripts/farmer.gd" id="1_sxhtl"]
+[ext_resource type="PackedScene" uid="uid://b2ynlj3wvilgs" path="res://models/farmer.gltf" id="2_kksm0"]
+[ext_resource type="Shader" path="res://shaders/curvature.gdshader" id="3_c1ehh"]
+[ext_resource type="Texture2D" uid="uid://3yrbxkwni8gi" path="res://models/palette.png" id="4_yur65"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4jgl3"]
+render_priority = 0
+shader = ExtResource("3_c1ehh")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = 0.5
+shader_parameter/metallic = null
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = null
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = null
+shader_parameter/texture_albedo = ExtResource("4_yur65")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_npi6v"]
+radius = 0.4
+
+[node name="Farmer" type="CharacterBody3D"]
+slide_on_ceiling = false
+floor_constant_speed = true
+script = ExtResource("1_sxhtl")
+
+[node name="farmer" parent="." instance=ExtResource("2_kksm0")]
+
+[node name="Cube" parent="farmer" index="0"]
+transform = Transform3D(0.4, 0, 0, 0, 0.932324, 0, 0, 0, 0.4, 0, 0.92, 0)
+surface_material_override/0 = SubResource("ShaderMaterial_4jgl3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.963071, 0)
+shape = SubResource("CapsuleShape3D_npi6v")
+
+[editable path="farmer"]
