@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://b1j4irodi3nsu"]
+
+[ext_resource type="PackedScene" uid="uid://dtrun58pywdjn" path="res://models/fence_1.glb" id="1_gj575"]
+[ext_resource type="Shader" path="res://shaders/curvature.gdshader" id="2_212oh"]
+[ext_resource type="Texture2D" uid="uid://3yrbxkwni8gi" path="res://models/palette.png" id="3_00dvd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_obvvx"]
+render_priority = 0
+shader = ExtResource("2_212oh")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = 0.5
+shader_parameter/metallic = null
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = null
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = null
+shader_parameter/texture_albedo = ExtResource("3_00dvd")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kq3j8"]
+size = Vector3(5.2, 1, 0.1)
+
+[node name="FenceObstacle" type="StaticBody3D"]
+
+[node name="fence_1" parent="." instance=ExtResource("1_gj575")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0146791, 0, 0.0619645)
+
+[node name="Cube" parent="fence_1" index="0"]
+surface_material_override/0 = SubResource("ShaderMaterial_obvvx")
+
+[node name="Cube001" parent="fence_1" index="1"]
+surface_material_override/0 = SubResource("ShaderMaterial_obvvx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.51793, 0.385922, 0)
+shape = SubResource("BoxShape3D_kq3j8")
+
+[editable path="fence_1"]

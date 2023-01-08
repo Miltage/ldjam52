@@ -1,6 +1,6 @@
 extends Node3D
 
-const SPEED = 5.8
+const SPEED = 5.6
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

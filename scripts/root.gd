@@ -2,6 +2,8 @@ extends Node3D
 
 const HaybaleScene = preload("res://scenes/haybale.tscn")
 const SideFenceScene = preload("res://scenes/side_fence.tscn")
+const FenceScene = preload("res://scenes/fence_obstacle.tscn")
+const CornStalkScene = preload("res://scenes/corn_stalk.tscn")
 
 const MOVE_SPEED = 4.0
 
@@ -48,7 +50,7 @@ func _process(delta):
 		lastSpawn = totalDistance
 		spawnObstacle()
 	
-	if ($Farmer.transform.origin.z - $Harvester.transform.origin.z < 1):
+	if ($Farmer.transform.origin.z - $Harvester.transform.origin.z < 1.0):
 		$Farmer.alive = false
 	
 	for obstacle in obstacles:
@@ -58,11 +60,28 @@ func _process(delta):
 
 
 func spawnObstacle():
-	spawnHaybales()
-	print("spawn obstacle")
+	var random_choice = randi_range(1, 3)
+	match (random_choice):
+		3: spawnCorn()
+		2: spawnFence()
+		1: spawnHaybales()
+
+func spawnCorn():
+	var amount = randi_range(50, 150)
+	for i in amount:
+		var obstacle = CornStalkScene.instantiate()
+		obstacle.transform.origin = Vector3(randf_range(-5.0, 5.0), 0.5, getObstacleSpawnPosition() + randf_range(-2.0, 2.0))
+		add_child(obstacle)
+		obstacles.append(obstacle)
+
+func spawnFence():
+	var obstacle = FenceScene.instantiate()
+	obstacle.transform.origin = Vector3(2.5, 0.4, getObstacleSpawnPosition())
+	add_child(obstacle)
+	obstacles.append(obstacle)
 
 func spawnHaybales():
-	var amount = randi_range(1, 4)
+	var amount = randi_range(3, 8)
 	for i in amount:
 		var obstacle = HaybaleScene.instantiate()
 		obstacle.transform.origin = Vector3(randf_range(-2.0, 2.0), 2, getObstacleSpawnPosition())
@@ -71,7 +90,7 @@ func spawnHaybales():
 		obstacles.append(obstacle)
 
 func getCameraIdealPosition():
-	return $Farmer.transform.origin.z + 6.0
+	return $Farmer.transform.origin.z + 4.0
 
 func getObstacleSpawnPosition():
 	return $Farmer.transform.origin.z + 15.0 + randf_range(-1.0, 1.0)

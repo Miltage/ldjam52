@@ -10,13 +10,16 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity") * 2
 
 var current_speed:float = 0
 var lastPosition:float = 0
+var deltaZ:float = 0
 var alive:bool = true
 
 func _ready():
 	current_speed = 0
 
 func _physics_process(delta):
-	if (!alive): return
+	if (!alive):
+		stop()
+		return
 	
 	# Add the gravity.
 	if not is_on_floor():
@@ -44,6 +47,16 @@ func _physics_process(delta):
 	if (transform.origin.x < -2.0): transform.origin.x = -2.0
 	elif (transform.origin.x > 2.0): transform.origin.x = 2.0
 	
-	if (abs(transform.origin.z - lastPosition) < 0.01 && current_speed > MIN_SPEED):
+	deltaZ = abs(transform.origin.z - lastPosition);
+	if (deltaZ < 0.01 && current_speed > MIN_SPEED):
 		current_speed *= 0.9
 	lastPosition = transform.origin.z
+	
+	rotation.y = lerp(rotation.y, velocity.x * PI/4 * 0.1, 0.1)
+	
+func _process(delta):
+	$farmer/AnimationPlayer.play("run" if deltaZ > 0.01 else "idle")
+	$farmer/AnimationPlayer.playback_speed = current_speed / MAX_SPEED * 1.25
+
+func stop():
+	$farmer/AnimationPlayer.stop()
