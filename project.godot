@@ -10,14 +10,16 @@ config_version=5
 
 [application]
 
-config/name="MaizeRunner"
+config/name="Maize Runner"
 run/main_scene="res://scenes/root.tscn"
 config/features=PackedStringArray("4.0", "GL Compatibility")
+boot_splash/show_image=false
 config/icon="res://icon.svg"
 
 [autoload]
 
 Global="*res://scripts/global.gd"
+Audio="*res://scripts/audio.gd"
 
 [display]
 
@@ -49,5 +51,8 @@ Jump={
 
 [rendering]
 
+rendering_device/staging_buffer/block_size_kb=512
+rendering_device/staging_buffer/max_size_mb=256
+gl_compatibility/item_buffer_size=24000
 anti_aliasing/quality/msaa_3d=1
 anti_aliasing/quality/screen_space_aa=1

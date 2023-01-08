@@ -1,9 +1,19 @@
-[gd_scene load_steps=9 format=3 uid="uid://dd07qwjyox83v"]
+[gd_scene load_steps=31 format=3 uid="uid://dd07qwjyox83v"]
 
 [ext_resource type="Shader" path="res://shaders/curvature.gdshader" id="1_d7h1h"]
 [ext_resource type="Script" path="res://scripts/root.gd" id="1_xjax0"]
 [ext_resource type="PackedScene" uid="uid://bo8enipoetsnd" path="res://scenes/farmer.tscn" id="3_crk74"]
 [ext_resource type="PackedScene" uid="uid://cqjp6nxs7fyme" path="res://scenes/harvester.tscn" id="4_2jcxv"]
+[ext_resource type="FontFile" uid="uid://q80rw4jsfstw" path="res://Bodo Amat.ttf" id="5_8h2gf"]
+[ext_resource type="Texture2D" uid="uid://jc7ljpgh6xee" path="res://assets/title.png" id="6_7vx4q"]
+[ext_resource type="Texture2D" uid="uid://croyjw3hknf2s" path="res://assets/restart_button.png" id="6_oocdb"]
+[ext_resource type="Texture2D" uid="uid://v32e1sw37bx6" path="res://assets/replay_button.png" id="7_2oigs"]
+[ext_resource type="Texture2D" uid="uid://d3osfptubllcj" path="res://assets/start_button.png" id="7_hrbx7"]
+[ext_resource type="PackedScene" uid="uid://ds4i5qk22bdc8" path="res://scenes/house.tscn" id="9_eiln0"]
+[ext_resource type="AudioStream" uid="uid://c3rvjwnsnbn0b" path="res://assets/cheer.wav" id="11_lceok"]
+[ext_resource type="AudioStream" uid="uid://wuhs2xjba8v3" path="res://assets/death_1.wav" id="12_tht3j"]
+[ext_resource type="AudioStream" uid="uid://cxnhnfov8ysxx" path="res://assets/death_2.wav" id="13_yuwjm"]
+[ext_resource type="AudioStream" uid="uid://cve23hkh34ky2" path="res://assets/death_3.wav" id="14_hj13h"]
 
 [sub_resource type="Environment" id="Environment_kiqwn"]
 background_mode = 1
@@ -13,6 +23,7 @@ volumetric_fog_albedo = Color(0.541176, 1, 0.941176, 1)
 volumetric_fog_emission = Color(0.2, 0.768627, 0.811765, 1)
 volumetric_fog_length = 128.0
 volumetric_fog_ambient_inject = 16.0
+adjustment_enabled = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_t1evg"]
 size = Vector3(40, 1, 100)
@@ -36,16 +47,80 @@ shader_parameter/uv1_offset = null
 shader_parameter/uv2_scale = Vector3(1, 1, 1)
 shader_parameter/uv2_offset = null
 
+[sub_resource type="Theme" id="Theme_jqare"]
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/constants/outline_size = 12
+Label/font_sizes/font_size = 40
+Label/fonts/font = ExtResource("5_8h2gf")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tsgqs"]
+atlas = ExtResource("6_oocdb")
+region = Rect2(0, 0, 250, 95)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f11qf"]
+atlas = ExtResource("6_oocdb")
+region = Rect2(-0.679611, 183.542, 251.47, 84.4534)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s1fb3"]
+atlas = ExtResource("6_oocdb")
+region = Rect2(0, 92, 252.39, 90)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_062m4"]
+atlas = ExtResource("7_2oigs")
+region = Rect2(2, 0, 235.605, 95)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yy8ei"]
+atlas = ExtResource("7_2oigs")
+region = Rect2(2, 188.386, 236.974, 86.344)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yxvci"]
+atlas = ExtResource("7_2oigs")
+region = Rect2(2, 92, 235.605, 95)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xc4dj"]
+atlas = ExtResource("7_hrbx7")
+region = Rect2(0, 0, 250, 95)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_epfvl"]
+atlas = ExtResource("7_hrbx7")
+region = Rect2(-0.679611, 183.542, 251.47, 84.4534)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tma2d"]
+atlas = ExtResource("7_hrbx7")
+region = Rect2(0, 92, 252.39, 90)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6cwmm"]
+render_priority = 0
+shader = ExtResource("1_d7h1h")
+shader_parameter/albedo = Color(0.47451, 0.541176, 0.219608, 1)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = 0.5
+shader_parameter/metallic = null
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = null
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = null
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_653sx"]
+streams_count = 3
+stream_0/stream = ExtResource("12_tht3j")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("13_yuwjm")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("14_hj13h")
+stream_2/weight = 1.0
+
 [node name="Root" type="Node3D"]
 script = ExtResource("1_xjax0")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.732543, 0.680721, 0, -0.680721, 0.732543, 0, 3.5, 45.6598)
 environment = SubResource("Environment_kiqwn")
-current = true
 
 [node name="Farmer" parent="." instance=ExtResource("3_crk74")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.542, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 
 [node name="Ground" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16.207)
@@ -54,9 +129,164 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 16.207)
 shape = SubResource("BoxShape3D_t1evg")
 
 [node name="GroundMesh" type="CSGMesh3D" parent="Ground"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 mesh = SubResource("PlaneMesh_o33mf")
 material = SubResource("ShaderMaterial_30xeo")
 
 [node name="Harvester" parent="." instance=ExtResource("4_2jcxv")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -6.325)
+
+[node name="DeathScreen" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="DeathScreen"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.2
+anchor_right = 1.0
+anchor_bottom = 0.2
+offset_top = -48.0
+offset_bottom = -1.0
+grow_horizontal = 2
+theme = SubResource("Theme_jqare")
+text = "Sample Text"
+horizontal_alignment = 1
+
+[node name="RestartButton" type="TextureButton" parent="DeathScreen"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.906667
+anchor_right = 0.5
+anchor_bottom = 0.906667
+offset_left = -125.0
+offset_top = -95.0
+offset_right = 125.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_default_cursor_shape = 2
+texture_normal = SubResource("AtlasTexture_tsgqs")
+texture_pressed = SubResource("AtlasTexture_f11qf")
+texture_hover = SubResource("AtlasTexture_s1fb3")
+metadata/_edit_use_anchors_ = true
+
+[node name="HomeScreen" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="HomeScreen"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.586667
+anchor_right = 1.0
+anchor_bottom = 0.601667
+offset_bottom = 38.0
+grow_horizontal = 2
+theme = SubResource("Theme_jqare")
+text = "Sample Text"
+horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="RestartButton" type="TextureButton" parent="HomeScreen"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.906667
+anchor_right = 0.5
+anchor_bottom = 0.906667
+offset_left = -125.0
+offset_top = -95.0
+offset_right = 125.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_default_cursor_shape = 2
+texture_normal = SubResource("AtlasTexture_062m4")
+texture_pressed = SubResource("AtlasTexture_yy8ei")
+texture_hover = SubResource("AtlasTexture_yxvci")
+metadata/_edit_use_anchors_ = true
+
+[node name="SplashScreen" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="TextureRect" parent="SplashScreen"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.326667
+anchor_right = 0.5
+anchor_bottom = 0.326667
+offset_left = -213.0
+offset_top = -123.5
+offset_right = 213.0
+offset_bottom = 123.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_7vx4q")
+metadata/_edit_use_anchors_ = true
+
+[node name="StartButton" type="TextureButton" parent="SplashScreen"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.906667
+anchor_right = 0.5
+anchor_bottom = 0.906667
+offset_left = -125.0
+offset_top = -95.0
+offset_right = 125.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_default_cursor_shape = 2
+texture_normal = SubResource("AtlasTexture_xc4dj")
+texture_pressed = SubResource("AtlasTexture_epfvl")
+texture_hover = SubResource("AtlasTexture_tma2d")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="SplashScreen"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.2
+anchor_right = 1.0
+anchor_bottom = 0.2
+offset_top = 264.0
+offset_bottom = 311.0
+grow_horizontal = 2
+theme = SubResource("Theme_jqare")
+text = "Outrun the harvester!"
+horizontal_alignment = 1
+
+[node name="House" parent="." instance=ExtResource("9_eiln0")]
+transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1.5, 0, 1.5, 0, -6.55671e-08, 0, 0.5, 14.615)
+
+[node name="Shadow" type="CSGCylinder3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.210742, 0)
+material_override = SubResource("ShaderMaterial_6cwmm")
+radius = 0.35
+height = 0.1
+sides = 16
+
+[node name="Cheer" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("11_lceok")
+
+[node name="Death" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_653sx")
+
+[connection signal="pressed" from="DeathScreen/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="HomeScreen/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="SplashScreen/StartButton" to="." method="_on_start_button_pressed"]

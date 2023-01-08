@@ -1,0 +1,74 @@
+[gd_scene load_steps=8 format=3 uid="uid://ds4i5qk22bdc8"]
+
+[ext_resource type="Script" path="res://scripts/house.gd" id="1_cqj6f"]
+[ext_resource type="PackedScene" uid="uid://b2tsyy46nvav" path="res://models/house.glb" id="2_tgrhp"]
+[ext_resource type="Shader" path="res://shaders/curvature.gdshader" id="3_8exv1"]
+[ext_resource type="Texture2D" uid="uid://3yrbxkwni8gi" path="res://models/palette.png" id="4_u0j3i"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_v1rdw"]
+size = Vector3(0.5, 2.358, 2.159)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2qefx"]
+size = Vector3(0.5, 1.257, 2.159)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mxg6m"]
+render_priority = 0
+shader = ExtResource("3_8exv1")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = 0.5
+shader_parameter/metallic = null
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = null
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = null
+shader_parameter/texture_albedo = ExtResource("4_u0j3i")
+
+[node name="House" type="StaticBody3D"]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 0, 0, 0)
+script = ExtResource("1_cqj6f")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.288955, 1.17781, 1.39331)
+shape = SubResource("BoxShape3D_v1rdw")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.288955, 1.17781, -1.38784)
+shape = SubResource("BoxShape3D_v1rdw")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.288955, 1.64949, 0.0918643)
+shape = SubResource("BoxShape3D_2qefx")
+
+[node name="house" parent="." instance=ExtResource("2_tgrhp")]
+
+[node name="Floorboards" parent="house" index="0"]
+surface_material_override/0 = SubResource("ShaderMaterial_mxg6m")
+
+[node name="RightWall" parent="house" index="1"]
+surface_material_override/0 = SubResource("ShaderMaterial_mxg6m")
+
+[node name="LeftWall" parent="house" index="2"]
+surface_material_override/0 = SubResource("ShaderMaterial_mxg6m")
+
+[node name="BackWall" parent="house" index="3"]
+surface_material_override/0 = SubResource("ShaderMaterial_mxg6m")
+
+[node name="Door" parent="house" index="4"]
+surface_material_override/0 = SubResource("ShaderMaterial_mxg6m")
+
+[node name="Plane" parent="house" index="5"]
+surface_material_override/0 = SubResource("ShaderMaterial_mxg6m")
+
+[node name="Television" parent="house" index="6"]
+surface_material_override/0 = SubResource("ShaderMaterial_mxg6m")
+
+[node name="Rug" parent="house" index="7"]
+surface_material_override/0 = SubResource("ShaderMaterial_mxg6m")
+
+[node name="Couch" parent="house" index="8"]
+surface_material_override/0 = SubResource("ShaderMaterial_mxg6m")
+
+[editable path="house"]
